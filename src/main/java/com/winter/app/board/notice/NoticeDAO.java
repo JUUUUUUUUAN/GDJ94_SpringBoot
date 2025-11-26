@@ -5,10 +5,12 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.winter.app.util.Pager;
+
 @Mapper
 public interface NoticeDAO {
 	// 목록
-	public List<NoticeDTO> list() throws Exception;
+	public List<NoticeDTO> list(Pager pager) throws Exception;
 	
 	// 수정
 	public int update(NoticeDTO noticeDTO) throws Exception;
@@ -21,5 +23,8 @@ public interface NoticeDAO {
 	
 	// 조회
 	public NoticeDTO detail(NoticeDTO noticeDTO) throws Exception;
+	
+	// 목록 합계 
+	public Long countList() throws Exception;
 	
 }

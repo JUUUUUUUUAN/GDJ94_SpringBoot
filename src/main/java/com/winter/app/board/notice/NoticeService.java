@@ -1,7 +1,11 @@
 package com.winter.app.board.notice;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.winter.app.util.Pager;
 
 @Service
 public class NoticeService {
@@ -9,8 +13,11 @@ public class NoticeService {
 	@Autowired
 	private NoticeDAO noticeDAO;
 	
-	public java.util.List<NoticeDTO> List() throws Exception{
-		return noticeDAO.list();
+	public List<NoticeDTO> list(Pager pager) throws Exception{
+		// 1. totalCount 구하기
+		Long totalCount = noticeDAO.countList();
+		pager.pageing(totalCount);
+		return noticeDAO.list(pager);
 	}
 	
 	public NoticeDTO detail(NoticeDTO noticeDTO) throws Exception {
@@ -28,4 +35,5 @@ public class NoticeService {
 	public int delete(Long num) throws Exception {
 		return noticeDAO.delete(num);
 	}
+	
 }

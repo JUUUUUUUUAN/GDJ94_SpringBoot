@@ -4,8 +4,11 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
     <mapper namespace="com.winter.app.board.notice.NoticeDAO">
-    	<select id="list" resultType="NoticeDTO">
-    		SELECT * FROM notice
+    	<select id="countList" resultType="Long">
+    		SELECT count(board_num) FROM notice
+    	</select>
+    	<select id="list" resultType="NoticeDTO" parameterType="Pager">
+    		SELECT * FROM notice LIMIT #{startNum}, #{perPage}
     	</select>
     	<update id="update" parameterType="NoticeDTO">
     	UPDATE notice SET board_title=#{boardTitle}, board_writer=#{boardWriter}, board_contents=#{boardContents} WHERE board_num=#{boardNum};
