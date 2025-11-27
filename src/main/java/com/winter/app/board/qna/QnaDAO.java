@@ -11,8 +11,10 @@ public interface QnaDAO {
 	// 목록
 	public List<QnaDTO> list(Pager pager) throws Exception;
 	
+	// 총합 조회
+	public Long count(Pager pager) throws Exception;
 	// 추가
 	public int add(QnaDTO qnaDTO) throws Exception;
-	// 총합 조회
-	public Long count() throws Exception;
+	// ref 추가
+	public void refUpdate(QnaDTO qnaDTO) throws Exception;
 }

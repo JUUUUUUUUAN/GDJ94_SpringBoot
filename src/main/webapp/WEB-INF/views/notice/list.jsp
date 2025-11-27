@@ -35,6 +35,20 @@
 	                <!-- Content Row -->
 	                <div class="row justify-content-center">
 	                <!-- 생성한 contents 작성 -->
+		                <form class="col-sm-8">
+		                	<div class="input-group mb-3">
+								    <select class="form-control" name="kind">
+								      <option value="k1">Title</option>
+								      <option value="k2">Contents</option>
+								      <option value="k3">Writer</option>
+								    </select>
+			                	<input type="text" class="form-control" name="search" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+									<div class="input-group-append">
+									    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
+									</div>
+							</div>
+		                </form>
+
 	                	<table class="table col-sm-8 mt-5">
 						  <thead class="thead-light">
 						    <tr>
@@ -49,7 +63,7 @@
 						  	<c:forEach items="${list}" var="notice">
 							    <tr>
 							      <td>${notice.boardNum}</td>
-							      <td>${notice.boardTitle}</td>
+							      <td><a href="./detail?boardNum=${notice.boardNum}">${notice.boardTitle}</a></td>
 							      <td>${notice.boardWriter}</td>
 							      <td>${notice.boardDate}</td>
 							      <td>${notice.boardHit}</td>
@@ -60,24 +74,28 @@
 						
 						
 	                </div>     
-	                <div class="row justify-content-center">
+	                <div class="row justify-content-between col-sm-8 offset-sm-2">
 						<nav aria-label="Page navigation example">
 						  <ul class="pagination">
 						    <li class="page-item">
-						      <a class="page-link" href="./list?page=${pager.begin - 1}" aria-label="Previous">
+						      <a class="page-link" href="./list?page=${pager.begin - 1}&kind=${param.kind}&search=${param.search}" aria-label="Previous">
 						        <span aria-hidden="true">&laquo;</span>
 						      </a>
 						    </li>
 						    <c:forEach begin="${pager.begin}" end="${pager.end}" var="i">
-						    	<li class="page-item"><a class="page-link" href="./list?page=${i}">${i}</a></li>						    
+						    	<li class="page-item"><a class="page-link" href="./list?page=${i}&kind=${param.kind}&search=${param.search}">${i}</a></li>						    
 						    </c:forEach>
 						    <li class="page-item">
-						      <a class="page-link" href="./list?page=${pager.end + 1}" aria-label="Next">
+						      <a class="page-link" href="./list?page=${pager.end + 1}&kind=${pager.kind}&search=${pager.search}" aria-label="Next">
 						        <span aria-hidden="true">&raquo;</span>
 						      </a>
 						    </li>
 						  </ul>
 						</nav>
+						
+						<div>
+							<a href="/notice/add" class="btn btn-primary">글쓰기</a>
+						</div>
 	                </div>     
                 </div>
                 <!-- /.container-fluid -->

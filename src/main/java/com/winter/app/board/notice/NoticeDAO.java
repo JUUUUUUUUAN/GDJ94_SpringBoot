@@ -19,12 +19,12 @@ public interface NoticeDAO {
 	public int delete(Long num) throws Exception;
 	
 	// 추가
-	public int insert(NoticeDTO noticeDTO) throws Exception;
+	public int add(NoticeDTO noticeDTO) throws Exception;
 	
 	// 조회
 	public NoticeDTO detail(NoticeDTO noticeDTO) throws Exception;
 	
 	// 목록 합계 
-	public Long countList() throws Exception;
+	public Long countList(Pager pager) throws Exception;
 	
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,6 +27,31 @@ public class NoticeController {
 		List<NoticeDTO> list = noticeService.list(pager);
 		model.addAttribute("list", list);
 		model.addAttribute("pager", pager);
+	}
+	
+	@GetMapping("add")
+	public String add() {
+		return "/notice/add";
+	}
+	
+	@PostMapping("add")
+	public String add(NoticeDTO noticeDTO, Model model) throws Exception {
+		noticeService.add(noticeDTO);
+		
+		model.addAttribute("path", "list");
+		return "/commons/result";
+	}
+	
+	@GetMapping("detail")
+	public String detail(NoticeDTO noticeDTO, Model model) throws Exception {
+		noticeDTO = noticeService.detail(noticeDTO);
+		
+		// null(조회 실패 시 처리)
+		if(noticeDTO == null) {
+			return "/notice/list";
+		}
+		model.addAttribute("notice", noticeDTO);
+		return "/notice/detail";
 	}
 	
 }
