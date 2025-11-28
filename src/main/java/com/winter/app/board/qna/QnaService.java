@@ -5,22 +5,44 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.winter.app.board.BoardDTO;
+import com.winter.app.board.BoardService;
 import com.winter.app.util.Pager;
 
 @Service
-public class QnaService {
+public class QnaService implements BoardService {
 	
 	@Autowired
 	private QnaDAO qnaDAO;
 	
-	public List<QnaDTO> list(Pager pager) throws Exception {
+	@Override
+	public int update(BoardDTO boardDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(Long num) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int add(BoardDTO boardDTO) throws Exception {
+		qnaDAO.add(boardDTO);
+		//qnaDAO.refUpdate(boardDTO);
+	}
+
+	@Override
+	public BoardDTO detail(BoardDTO boardDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<BoardDTO> list(Pager pager) throws Exception {
 		Long totalCount = qnaDAO.count(pager);
 		pager.pageing(totalCount);
 		return qnaDAO.list(pager);
 	}
 	
-	public void add(QnaDTO qnaDTO) throws Exception {
-		qnaDAO.add(qnaDTO);
-		qnaDAO.refUpdate(qnaDTO);
-	}
 }

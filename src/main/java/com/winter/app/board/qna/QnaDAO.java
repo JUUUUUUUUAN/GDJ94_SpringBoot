@@ -1,20 +1,11 @@
 package com.winter.app.board.qna;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 
+import com.winter.app.board.BoardDAO;
 import com.winter.app.util.Pager;
 
 @Mapper
-public interface QnaDAO {
-	// 목록
-	public List<QnaDTO> list(Pager pager) throws Exception;
-	
-	// 총합 조회
-	public Long count(Pager pager) throws Exception;
-	// 추가
-	public int add(QnaDTO qnaDTO) throws Exception;
-	// ref 추가
-	public void refUpdate(QnaDTO qnaDTO) throws Exception;
+public interface QnaDAO extends BoardDAO {
+
 }
