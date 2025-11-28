@@ -16,7 +16,7 @@
     			WHERE board_writer LIKE concat('%',#{search},'%')    		
     		</if>
     	</sql>
-    	<select id="countList" resultType="Long" parameterType="Pager">
+    	<select id="count" resultType="Long" parameterType="Pager">
     		SELECT count(board_num) FROM notice
 			<include refid="search"></include>
     	</select>
@@ -30,7 +30,7 @@
     	<update id="update" parameterType="NoticeDTO">
     		UPDATE notice SET board_title=#{boardTitle}, board_writer=#{boardWriter}, board_contents=#{boardContents} WHERE board_num=#{boardNum};
     	</update>
-    	<delete id="delete" parameterType="Long">
+    	<delete id="delete" parameterType="NoticeDTO">
     		DELETE FROM notice WHERE board_num=#{boardNum} 
     	</delete>
     	<insert id="add" parameterType="NoticeDTO">

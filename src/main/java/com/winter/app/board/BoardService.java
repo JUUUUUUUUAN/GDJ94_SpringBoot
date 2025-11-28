@@ -13,7 +13,7 @@ public interface BoardService {
 	public int update(BoardDTO boardDTO) throws Exception;
 	
 	// 삭제
-	public int delete(Long num) throws Exception;
+	public int delete(BoardDTO boardDTO) throws Exception;
 	
 	// 추가
 	public int add(BoardDTO boardDTO) throws Exception;

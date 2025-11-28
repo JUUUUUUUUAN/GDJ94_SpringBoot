@@ -16,12 +16,12 @@ public interface BoardDAO {
 	public int update(BoardDTO boardDTO) throws Exception;
 	
 	// 삭제
-	public int delete(Long num) throws Exception;
+	public int delete(BoardDTO boardDTO) throws Exception;
 	
 	// 추가
 	public int add(BoardDTO boardDTO) throws Exception;
 	
 	// 조회
-	public NoticeDTO detail(BoardDTO boardDTO) throws Exception;
+	public BoardDTO detail(BoardDTO boardDTO) throws Exception;
 	
 }

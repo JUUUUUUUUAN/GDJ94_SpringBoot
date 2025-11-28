@@ -6,8 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<c:import url="/WEB-INF/views/tamplate/head.jsp"></c:import>
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-bs4.min.css" rel="stylesheet">
+	<c:import url="/WEB-INF/views/tamplate/head.jsp"></c:import>
 </head>
 <body id="page-top">
 	<div id="wrapper">
@@ -28,7 +27,7 @@
                 <div class="container-fluid">
                 	<!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">공지사항 작성</h1>
+                        <h1 class="h3 mb-0 text-gray-800">${category} Detail</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
@@ -36,22 +35,31 @@
 	                <!-- Content Row -->
 	                <div class="row justify-content-center">
 	                <!-- 생성한 contents 작성 -->
-						<form action="/notice/add" method="post" class="col-sm-6">
-						  <div class="form-group">
-						    <label for="title">제목</label>
-						    <input type="text" class="form-control" name="boardTitle" id="title">
-						  </div>
-						  <div class="form-group">
-						    <label for="writer">작성자</label>
-						    <input type="text" class="form-control" name="boardWriter" id="writer">
-						  </div>
-						  <div class="form-group">
-						    <label for="contents">내용</label>
-						    <textarea class="form-control" name="boardContents" id="contents" rows="6" cols="">
-						    </textarea>
-						  </div>
-						  <button type="submit" class="btn btn-primary">Submit</button>
-						</form>
+                		<div class="col-sm-6">
+							  <div>
+							    <label for="title">제목</label>
+						    	<input type="text" class="form-control" value="${notice.boardTitle}" id="title" readonly="readonly">
+							  </div>
+							  <div>
+							    <label for="writer">작성자</label>
+						    	<input type="text" class="form-control" value="${notice.boardWriter}" id="writer" readonly="readonly">
+							  </div>
+							  <div>
+							  	<label for="contents">내용</label>
+							    <textarea class="form-control"  id="contents" rows="6" cols="" readonly="readonly">${notice.boardContents}</textarea>
+							  </div>
+							  <div class="mt-3">
+							  	  <form action="./delete?boardNum=${notice.boardNum}" method="post" style="display:inline-block">
+								  	<button type="submit" class="btn btn-danger">삭제</button>							  	  
+							  	  </form>
+								  <button type="submit" class="btn btn-success">
+								  	<a href="./update?boardNum=${notice.boardNum}">수정</a> 
+								  </button>
+								  <c:if test="${category ne 'Notice'}">
+								  	<a href="./reply?boardNum=${notice.boardNum}" class="btn btn-primary">답글</a>							  								  
+								  </c:if>
+							  </div>
+                		</div>
 	                </div>          
                 </div>
                 <!-- /.container-fluid -->
@@ -71,9 +79,5 @@
 	</div>
 	
 	<c:import url="/WEB-INF/views/tamplate/foot.jsp"></c:import>
-	<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-bs4.min.js"></script>
-	<script type="text/javascript">
-		$("#contents").summernote()
-	</script>
 </body>
 </html>

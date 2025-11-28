@@ -28,7 +28,7 @@
                 <div class="container-fluid">
                 	<!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">QnA 작성</h1>
+                        <h1 class="h3 mb-0 text-gray-800">${category} ${sub}</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
@@ -36,19 +36,19 @@
 	                <!-- Content Row -->
 	                <div class="row justify-content-center">
 	                <!-- 생성한 contents 작성 -->
-						<form action="/qna/add" method="post" class="col-sm-6">
+						<form method="post" class="col-sm-6">
+						<input type="hidden" name="boardNum" value="${dto.boardNum}">
 						  <div class="form-group">
 						    <label for="title">제목</label>
-						    <input type="text" class="form-control" name="boardTitle" id="title">
+						    <input type="text" class="form-control" name="boardTitle" id="title" value="${updateDto.boardTitle}">
 						  </div>
 						  <div class="form-group">
 						    <label for="writer">작성자</label>
-						    <input type="text" class="form-control" name="boardWriter" id="writer">
+						    <input type="text" class="form-control" name="boardWriter" id="writer" value="${updateDto.boardWriter}">
 						  </div>
 						  <div class="form-group">
 						    <label for="contents">내용</label>
-						    <textarea class="form-control" name="boardContents" id="contents" rows="6" cols="">
-						    </textarea>
+						    <textarea class="form-control" name="boardContents" id="contents" rows="6" cols="" >${updateDto.boardTitle}</textarea>
 						  </div>
 						  <button type="submit" class="btn btn-primary">Submit</button>
 						</form>

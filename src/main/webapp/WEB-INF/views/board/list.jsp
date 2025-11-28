@@ -27,7 +27,7 @@
                 <div class="container-fluid">
                 	<!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">공지사항</h1>
+                        <h1 class="h3 mb-0 text-gray-800">${category}</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
@@ -63,7 +63,12 @@
 						  	<c:forEach items="${list}" var="notice">
 							    <tr>
 							      <td>${notice.boardNum}</td>
-							      <td><a href="./detail?boardNum=${notice.boardNum}">${notice.boardTitle}</a></td>
+							      <td>
+								      <c:catch>
+									      <c:forEach begin="1" end="${notice.boardDepth}">-- </c:forEach>						      
+								      </c:catch>
+								      <a href="./detail?boardNum=${notice.boardNum}">${notice.boardTitle}</a>
+							      </td>
 							      <td>${notice.boardWriter}</td>
 							      <td>${notice.boardDate}</td>
 							      <td>${notice.boardHit}</td>
@@ -94,7 +99,7 @@
 						</nav>
 						
 						<div>
-							<a href="/notice/add" class="btn btn-primary">글쓰기</a>
+							<a href="./add" class="btn btn-primary">글쓰기</a>
 						</div>
 	                </div>     
                 </div>

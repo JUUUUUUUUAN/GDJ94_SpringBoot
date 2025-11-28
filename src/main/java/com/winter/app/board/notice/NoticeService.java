@@ -35,8 +35,8 @@ public class NoticeService implements BoardService {
 		return noticeDAO.update(boardDTO);
 	}
 	
-	public int delete(Long num) throws Exception {
-		return noticeDAO.delete(num);
+	public int delete(BoardDTO boardDTO) throws Exception {
+		return noticeDAO.delete(boardDTO);
 	}
 	
 }

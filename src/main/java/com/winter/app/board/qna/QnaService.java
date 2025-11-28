@@ -17,12 +17,11 @@ public class QnaService implements BoardService {
 	
 	@Override
 	public int update(BoardDTO boardDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return qnaDAO.update(boardDTO);
 	}
 
 	@Override
-	public int delete(Long num) throws Exception {
+	public int delete(BoardDTO boardDTO) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -30,13 +29,28 @@ public class QnaService implements BoardService {
 	@Override
 	public int add(BoardDTO boardDTO) throws Exception {
 		qnaDAO.add(boardDTO);
-		//qnaDAO.refUpdate(boardDTO);
+		return qnaDAO.refUpdate(boardDTO);
 	}
 
 	@Override
 	public BoardDTO detail(BoardDTO boardDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return qnaDAO.detail(boardDTO);
+	}
+	
+	public int reply(QnaDTO qnaDTO) throws Exception {
+		// 1. 부모의 정보를 조회
+		BoardDTO boardDTO = qnaDAO.detail(qnaDTO);
+		QnaDTO parent = (QnaDTO) boardDTO;
+		// 2. 부모의 정보를 이용해서 step을 업데이트
+		int result = qnaDAO.stepUpdate(parent);
+		// 3. 부모의 정보를 이용해서 ref, step, depth를 세팅
+		qnaDTO.setBoardRef(parent.getBoardRef());
+		qnaDTO.setBoardStep(parent.getBoardStep()+1);
+		qnaDTO.setBoardDepth(parent.getBoardDepth()+1);
+		// 4. insert
+		result = qnaDAO.add(qnaDTO);
+		
+		return result;
 	}
 
 	public List<BoardDTO> list(Pager pager) throws Exception {
