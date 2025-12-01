@@ -36,20 +36,29 @@
 	                <!-- Content Row -->
 	                <div class="row justify-content-center">
 	                <!-- 생성한 contents 작성 -->
-						<form method="post" class="col-sm-6">
+						<form method="post" class="col-sm-6" enctype="multipart/form-data">
 						<input type="hidden" name="boardNum" value="${dto.boardNum}">
 						  <div class="form-group">
 						    <label for="title">제목</label>
 						    <input type="text" class="form-control" name="boardTitle" id="title" value="${updateDto.boardTitle}">
 						  </div>
+						  
 						  <div class="form-group">
 						    <label for="writer">작성자</label>
 						    <input type="text" class="form-control" name="boardWriter" id="writer" value="${updateDto.boardWriter}">
 						  </div>
+						  
 						  <div class="form-group">
 						    <label for="contents">내용</label>
 						    <textarea class="form-control" name="boardContents" id="contents" rows="6" cols="" >${updateDto.boardTitle}</textarea>
 						  </div>
+						  
+						  <div class="form-group">
+						  	<button type="button" id="fileBtn">File Add</button>
+						  </div>
+						  <div id="files" class="form-group">
+						  </div>
+						  
 						  <button type="submit" class="btn btn-primary">Submit</button>
 						</form>
 	                </div>          
@@ -75,5 +84,6 @@
 	<script type="text/javascript">
 		$("#contents").summernote()
 	</script>
+	<script src="/js/board/board.js"></script>
 </body>
 </html>

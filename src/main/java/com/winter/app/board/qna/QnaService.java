@@ -1,11 +1,17 @@
 package com.winter.app.board.qna;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.winter.app.board.BoardDTO;
+import com.winter.app.board.BoardFileDTO;
 import com.winter.app.board.BoardService;
 import com.winter.app.util.Pager;
 
@@ -14,6 +20,9 @@ public class QnaService implements BoardService {
 	
 	@Autowired
 	private QnaDAO qnaDAO;
+	
+	@Value("app.upload.qna")
+	private String uploadPath;
 	
 	@Override
 	public int update(BoardDTO boardDTO) throws Exception {
@@ -27,8 +36,31 @@ public class QnaService implements BoardService {
 	}
 
 	@Override
-	public int add(BoardDTO boardDTO) throws Exception {
-		qnaDAO.add(boardDTO);
+	public int add(BoardDTO boardDTO, MultipartFile[] attach) throws Exception {
+		int result = qnaDAO.add(boardDTO);
+		// 1. 파일을 HDD에 저장
+		// 	1) 어디에 저장?
+		for(MultipartFile f : attach) {
+			File file = new File(uploadPath);
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			//	2) 어떤 이름으로 저장?	
+			String fileName = UUID.randomUUID().toString();
+			fileName = fileName + "-" + f.getOriginalFilename();
+			file = new File(file, fileName);
+
+			//  3) 파일 저장
+			FileCopyUtils.copy(f.getBytes(), file);
+			
+			//  4) 정보를 DB에 저장
+			BoardFileDTO boardFileDTO = new QnaFileDTO();
+			boardFileDTO.setFileName(fileName);
+			boardFileDTO.setFileOrigin(f.getOriginalFilename());
+			boardFileDTO.setBoardNum(boardDTO.getBoardNum());
+			qnaDAO.fileAdd(boardFileDTO);
+		}
+			
 		return qnaDAO.refUpdate(boardDTO);
 	}
 

@@ -44,7 +44,7 @@
 					    </div>
 					
 					    <div class="card-body">
-					      <form action="./add" method="post">
+					      <form method="post">
 					
 					        <!-- Product Name -->
 					        <div class="form-group mt-3">
@@ -53,7 +53,7 @@
 					            type="text" 
 					            class="form-control" 
 					            id="name" 
-					            name="product_name" 
+					            name="productName" 
 					            required>
 					        </div>
 					
@@ -63,7 +63,7 @@
 					          <textarea 
 					            class="form-control" 
 					            id="contents" 
-					            name="product_contents" 
+					            name="productContents" 
 					            rows="5"
 					          ></textarea>
 					        </div>
@@ -75,20 +75,20 @@
 					            type="text" 
 					            class="form-control" 
 					            id="category" 
-					            name="product_category">
+					            name="productCategory">
 					        </div>
 					
 					        <!-- Rate -->
 					        <div class="form-group mt-3">
 					          <label for="rate">Rate (0.00 ~ 9.99)</label>
 					          <input type="number" step="0.01" max="9.99" min="0" 
-					            class="form-control" id="rate" name="product_rate" required>
+					            class="form-control" id="rate" name="productRate" required>
 					        </div>
 					
 					        <!-- Sale 여부 -->
 					        <div class="form-group mt-3">
 					          <label for="sale">종료여부</label>
-					          <select class="form-control" id="sale" name="product_sale">
+					          <select class="form-control" id="sale" name="productSale">
 					            <option value="0">No</option>
 					            <option value="1">Yes</option>
 					          </select>

@@ -33,11 +33,16 @@
     	<delete id="delete" parameterType="NoticeDTO">
     		DELETE FROM notice WHERE board_num=#{boardNum} 
     	</delete>
-    	<insert id="add" parameterType="NoticeDTO">
+    	<insert id="add" parameterType="NoticeDTO"  useGeneratedKeys="true" keyProperty="boardNum">
 	    	INSERT INTO notice(board_title, board_writer, board_date, board_contents) 
 	    	VALUES(#{boardTitle},#{boardWriter},now(),#{boardContents})
     	</insert>
     	<select id="detail" parameterType="NoticeDTO" resultType="NoticeDTO">
     		SELECT * FROM notice WHERE board_num=#{boardNum}
     	</select>
+    	
+    	<!-- fileAdd -->
+    	<insert id="fileAdd" parameterType="NoticeFileDTO">
+    		INSERT INTO notice_files VALUES (null, #{fileName}, #{fileOrigin}, #{boardNum})
+    	</insert>
     </mapper>

@@ -24,4 +24,6 @@ public interface BoardDAO {
 	// 조회
 	public BoardDTO detail(BoardDTO boardDTO) throws Exception;
 	
+	public int fileAdd(BoardFileDTO boardFileDTO) throws Exception;
+	
 }

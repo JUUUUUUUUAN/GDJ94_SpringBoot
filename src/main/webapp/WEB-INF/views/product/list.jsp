@@ -44,20 +44,22 @@
 					    </tr>
 					  </thead>
 					  <tbody>
+					  	<c:forEach items="${list}" var="product">
 					      <tr>
 					        <td>
-					        num
+					        ${product.productNum}
 					        </td>
 					        <td>
-					        <a>name</a>
+					        <a>${product.productName}</a>
 					        </td>
 					        <td>
 					          <span class="badge" 
 					                style="background-color: #ffd24c; font-size: 1rem;">
-					            ★ 2.00
+					            ★ ${product.productRate}
 					          </span>
 					        </td>
-					      </tr>
+					      </tr>					  	
+					  	</c:forEach>
 					  </tbody>
 					</table>
 	                </div>          
