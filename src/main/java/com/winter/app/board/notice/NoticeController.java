@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.winter.app.board.BoardDTO;
+import com.winter.app.board.BoardFileDTO;
 import com.winter.app.util.Pager;
 
 import lombok.extern.slf4j.Slf4j;
@@ -86,6 +87,15 @@ public class NoticeController {
 	public String update(NoticeDTO noticeDTO) throws Exception {
 		int result = noticeService.update(noticeDTO);
 		return "redirect:./detail?boardNum="+noticeDTO.getBoardNum();
+	}
+	
+	@GetMapping("fileDown")
+	public String fileDown(BoardFileDTO boardFileDTO, Model model) throws Exception {
+		boardFileDTO = noticeService.fileDetail(boardFileDTO);
+		model.addAttribute("file", boardFileDTO);
+		
+		
+		return "fileDownView";
 	}
 	
 }

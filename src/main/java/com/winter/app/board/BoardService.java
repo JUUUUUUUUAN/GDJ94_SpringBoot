@@ -22,4 +22,6 @@ public interface BoardService {
 	
 	// 조회
 	public BoardDTO detail(BoardDTO boardDTO) throws Exception;
+	
+	public BoardFileDTO fileDetail(BoardFileDTO boardFileDTO) throws Exception;
 }

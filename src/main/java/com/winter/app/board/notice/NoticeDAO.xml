@@ -66,4 +66,7 @@
     	<insert id="fileAdd" parameterType="BoardFileDTO">
     		INSERT INTO notice_files VALUES (null, #{fileName}, #{fileOrigin}, #{boardNum})
     	</insert>
+    	<!-- <select id="fileDetail" parameterType="" resultType="BoardFileDTO">
+			    	
+    	</select> -->
     </mapper>

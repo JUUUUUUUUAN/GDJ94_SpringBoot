@@ -50,7 +50,7 @@
 							  </div>
 							  <div>
 							  	<c:forEach items="${notice.fileDTOs}" var="file">
-							  		<a href="/files/${category}/${file.fileName}">${file.fileOrigin}</a>
+							  		<a href="./fileDown?fileNum=${file.fileNum}">${file.fileOrigin}</a>
 							  	</c:forEach>
 							  </div>
 							  <div class="mt-3">
