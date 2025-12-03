@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,7 @@ import com.winter.app.files.FileManager;
 import com.winter.app.util.Pager;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class NoticeService implements BoardService {
 
 	@Autowired
@@ -42,10 +44,7 @@ public class NoticeService implements BoardService {
 	public int add(BoardDTO boardDTO, MultipartFile[] attach) throws Exception {
 		// 글번호가 필요
 		int result = noticeDAO.add(boardDTO);
-		// 예외1. 파일이 없는 경우
-		if(attach == null) {
-			return result;
-		}
+		// 예외1. 파일이 없는 경우 => transactional로 예외처리됨
 		
 		// 1. 파일을 HDD에 저장
 		// 	1) 어디에 저장?
