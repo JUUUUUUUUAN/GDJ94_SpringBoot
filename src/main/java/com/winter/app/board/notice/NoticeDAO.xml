@@ -66,4 +66,8 @@
     	<insert id="fileAdd" parameterType="BoardFileDTO">
     		INSERT INTO notice_files VALUES (null, #{fileName}, #{fileOrigin}, #{boardNum})
     	</insert>
+    	
+    	<select id="fileDetail" parameterType="BoardFileDTO" resultType="BoardFileDTO">
+    		SELECT * FROM notice_files WHERE file_num=#{fileNum}
+    	</select>
     </mapper>

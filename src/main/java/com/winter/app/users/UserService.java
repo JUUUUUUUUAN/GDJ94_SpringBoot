@@ -17,5 +17,17 @@ public class UserService {
 		userDAO.fileAdd(userFileDTO);
 	}
 	
+	public UserDTO detail(UserDTO userDTO) throws Exception {
+		UserDTO loginDTO =  userDAO.detail(userDTO);
+		
+		if(loginDTO != null) {
+			if (loginDTO.getPassword().equals(userDTO.getPassword())) {
+				return loginDTO;
+			} else {
+				loginDTO = null;
+			}
+		}
+		return loginDTO;
+	}
 	
 }

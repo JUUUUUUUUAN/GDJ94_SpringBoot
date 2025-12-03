@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<c:import url="/WEB-INF/views/tamplate/head.jsp"></c:import>
+<c:import url="/WEB-INF/views/tamplate/head.jsp"></c:import>
 </head>
 <body id="page-top">
 	<div id="wrapper">
@@ -27,44 +27,49 @@
                 <div class="container-fluid">
                 	<!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">${category} Detail</h1>
+                        <h1 class="h3 mb-0 text-gray-800">로그인</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
                     
 	                <!-- Content Row -->
-	                <div class="row justify-content-center">
+	                <div class="row">
 	                <!-- 생성한 contents 작성 -->
-                		<div class="col-sm-6">
-							  <div>
-							    <label for="title">제목</label>
-						    	<input type="text" class="form-control" value="${notice.boardTitle}" id="title" readonly="readonly">
-							  </div>
-							  <div>
-							    <label for="writer">작성자</label>
-						    	<input type="text" class="form-control" value="${notice.boardWriter}" id="writer" readonly="readonly">
-							  </div>
-							  <div>
-							  	<label for="contents">내용</label>
-							    <textarea class="form-control"  id="contents" rows="6" cols="" readonly="readonly">${notice.boardContents}</textarea>
-							  </div>
-							  <div>
-							  	<c:forEach items="${notice.fileDTOs}" var="file">
-							  		<a href="./fileDown?fileNum=${file.fileNum}">${file.fileOrigin}</a>
-							  	</c:forEach>
-							  </div>
-							  <div class="mt-3">
-							  	  <form action="./delete?boardNum=${notice.boardNum}" method="post" style="display:inline-block">
-								  	<button type="submit" class="btn btn-danger">삭제</button>							  	  
-							  	  </form>
-								  <button type="submit" class="btn btn-success">
-								  	<a href="./update?boardNum=${notice.boardNum}">수정</a> 
-								  </button>
-								  <c:if test="${category ne 'notice'}">
-								  	<a href="./reply?boardNum=${notice.boardNum}" class="btn btn-primary">답글</a>							  								  
-								  </c:if>
-							  </div>
-                		</div>
+	                <div class="col-lg-6">
+
+	                        <!-- 회원가입 카드 -->
+	                        <div class="card shadow mb-4">
+	                            <div class="card-header py-3 bg-primary text-white">
+	                                <h6 class="m-0 font-weight-bold">회원 정보 입력</h6>
+	                            </div>
+
+	                            <div class="card-body">
+	                                <form method="post">
+
+	                                    <!-- ID -->
+	                                    <div class="mb-3">
+	                                        <label class="form-label">아이디</label>
+	                                        <input type="text" name="username" class="form-control">
+	                                    </div>
+
+	                                    <!-- Password -->
+	                                    <div class="mb-3">
+	                                        <label class="form-label">비밀번호</label>
+	                                        <input type="password" name="password" class="form-control">
+	                                    </div>
+
+	                                    
+	                                    <div class="text-center mt-4">
+	                                        <button type="submit" class="btn btn-primary btn-block w-100">
+	                                            회원가입
+	                                        </button>
+	                                    </div>
+
+	                                </form>
+	                            </div>
+	                        </div>
+
+	                    </div>
 	                </div>          
                 </div>
                 <!-- /.container-fluid -->

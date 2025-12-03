@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,8 +35,21 @@
                     
 	                <!-- Content Row -->
 	                <div class="row">
+		                <div>
+			                <spring:message code="hi"></spring:message>
+			                <spring:message code="hello" text="키가 없을 때 기본 메시지"></spring:message>
+		                </div>
 	                <!-- 생성한 contents 작성 -->
-	                </div>          
+		                <c:if test="${not empty user}">
+		                	<h1>Login 성공</h1>
+		                	<spring:message code="message.welcome" arguments="${user.username},${user.birth}," argumentSeparator="," var="m"></spring:message>
+		                	<hr>
+		                	<h3>${m}</h3>
+		                </c:if>
+		                <c:if test="${empty user}">
+		                	<h1>Login 필요</h1>
+		                </c:if>
+		                </div>          
                 </div>
                 <!-- /.container-fluid -->
             </div>
