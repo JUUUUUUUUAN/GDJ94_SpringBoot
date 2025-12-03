@@ -48,6 +48,11 @@
 							  	<label for="contents">내용</label>
 							    <textarea class="form-control"  id="contents" rows="6" cols="" readonly="readonly">${notice.boardContents}</textarea>
 							  </div>
+							  <div>
+							  	<c:forEach items="${notice.fileDTOs}" var="file">
+							  		<a href="/files/${category}/${file.fileName}">${file.fileOrigin}</a>
+							  	</c:forEach>
+							  </div>
 							  <div class="mt-3">
 							  	  <form action="./delete?boardNum=${notice.boardNum}" method="post" style="display:inline-block">
 								  	<button type="submit" class="btn btn-danger">삭제</button>							  	  
@@ -55,7 +60,7 @@
 								  <button type="submit" class="btn btn-success">
 								  	<a href="./update?boardNum=${notice.boardNum}">수정</a> 
 								  </button>
-								  <c:if test="${category ne 'Notice'}">
+								  <c:if test="${category ne 'notice'}">
 								  	<a href="./reply?boardNum=${notice.boardNum}" class="btn btn-primary">답글</a>							  								  
 								  </c:if>
 							  </div>

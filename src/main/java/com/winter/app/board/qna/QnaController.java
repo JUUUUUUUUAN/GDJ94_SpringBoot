@@ -87,4 +87,10 @@ public class QnaController {
 		return "redirect:./detail?boardNum="+qnaDTO.getBoardNum();
 	}
 	
+	@PostMapping("delete")
+	public String delete(BoardDTO boardDTO) throws Exception {
+		qnaService.delete(boardDTO);
+		return "redirect:./list";
+	}
+	
 }

@@ -5,10 +5,10 @@
 	<mapper namespace="com.winter.app.product.ProductDAO">
     	<!-- 상세 정보 조회 -->
     	<insert id="add" parameterType="ProductDTO">
-    		INSERT INTO product (product_name, product_contents, product_category, product_rate, product_sale)
+    		INSERT INTO products (product_name, product_contents, product_category, product_rate, product_sale)
     		VALUES (#{productName}, #{productContents}, #{productCategory}, #{productRate}, #{productSale})
     	</insert>
     	<select id="list" resultType="ProductDTO">
-    		SELECT * FROM product
+    		SELECT * FROM products
     	</select>
     </mapper>

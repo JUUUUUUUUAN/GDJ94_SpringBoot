@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.winter.app.board.BoardDTO;
 import com.winter.app.board.BoardFileDTO;
 import com.winter.app.board.BoardService;
+import com.winter.app.files.FileManager;
 import com.winter.app.util.Pager;
 
 @Service
@@ -21,7 +22,10 @@ public class QnaService implements BoardService {
 	@Autowired
 	private QnaDAO qnaDAO;
 	
-	@Value("app.upload.qna")
+	@Autowired
+	private FileManager fileManager;
+	
+	@Value("${app.upload.qna}")
 	private String uploadPath;
 	
 	@Override
@@ -31,8 +35,16 @@ public class QnaService implements BoardService {
 
 	@Override
 	public int delete(BoardDTO boardDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		boardDTO = qnaDAO.detail(boardDTO);
+		List<BoardFileDTO> attach = boardDTO.getFileDTOs();
+		if(attach != null) {
+			for (BoardFileDTO boardFileDTO : attach) {
+				File file = new File(uploadPath, boardFileDTO.getFileName());
+				boolean result = fileManager.fileDelete(file);
+			}			
+		}
+		qnaDAO.fileDelete(boardDTO);
+		return qnaDAO.delete(boardDTO);
 	}
 
 	@Override
@@ -40,21 +52,15 @@ public class QnaService implements BoardService {
 		int result = qnaDAO.add(boardDTO);
 		// 1. 파일을 HDD에 저장
 		// 	1) 어디에 저장?
+		File file = new File(uploadPath);
 		for(MultipartFile f : attach) {
-			File file = new File(uploadPath);
-			if(!file.exists()) {
-				file.mkdirs();
-			}
-			//	2) 어떤 이름으로 저장?	
-			String fileName = UUID.randomUUID().toString();
-			fileName = fileName + "-" + f.getOriginalFilename();
-			file = new File(file, fileName);
 
+			//	2) 어떤 이름으로 저장?
 			//  3) 파일 저장
-			FileCopyUtils.copy(f.getBytes(), file);
 			
 			//  4) 정보를 DB에 저장
 			BoardFileDTO boardFileDTO = new QnaFileDTO();
+			String fileName = fileManager.fileSave(file, f);
 			boardFileDTO.setFileName(fileName);
 			boardFileDTO.setFileOrigin(f.getOriginalFilename());
 			boardFileDTO.setBoardNum(boardDTO.getBoardNum());

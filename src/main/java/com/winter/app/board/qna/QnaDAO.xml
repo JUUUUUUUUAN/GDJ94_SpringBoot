@@ -32,9 +32,28 @@
     	<update id="refUpdate" parameterType="QnaDTO">
     		UPDATE qna SET board_ref = #{boardNum} WHERE board_num=#{boardNum}
     	</update>
-    	<select id="detail" parameterType="QnaDTO" resultType="QnaDTO">
-    		SELECT * FROM qna WHERE board_num=#{boardNum}
+    	
+    	<select id="detail" parameterType="QnaDTO" resultMap="detailResult">
+    		SELECT *
+			FROM qna q
+			LEFT JOIN qna_files qf
+			USING(board_num)
+			WHERE q.board_num=#{boardNum};
     	</select>
+    	<resultMap type="QnaDTO" id="detailResult">
+    		<id column="board_num" property="boardNum"/>
+    		<result column="board_title" property="boardTitle"/>
+    		<result column="board_writer" property="boardWriter"/>
+    		<result column="board_contents" property="boardContents"/>
+    		<result column="board_date" property="boardDate"/>
+    		<result column="board_hit" property="boardHit"/>
+    		<collection property="fileDTOs" javaType="java.util.List" ofType="BoardFileDTO">
+    			<id column="file_num" property="fileNum"/>
+    			<result column="file_name" property="fileName"/>
+    			<result column="file_origin" property="fileOrigin"/>
+    		</collection>
+    	</resultMap>
+    	
     	<update id="stepUpdate" parameterType="QnaDTO">
     		UPDATE qna SET board_step=board_step+1 WHERE board_ref=#{boardRef} AND board_step>#{boardStep}
     	</update>
@@ -45,9 +64,14 @@
     	<update id="update" parameterType="QnaDTO">
     		UPDATE qna SET board_title=#{boardTitle}, board_writer=#{boardWriter}, board_contents=#{boardContents} WHERE board_num=#{boardNum};
     	</update>
+    	
     	<delete id="delete" parameterType="QnaDTO">
-    		DELETE qna notice WHERE board_num=#{boardNum} 
+    		DELETE FROM qna WHERE board_num=#{boardNum} 
     	</delete>
+    	<delete id="fileDelete" parameterType="BoardDTO">
+    		DELETE FROM qna_files WHERE board_num=#{boardNum}
+    	</delete>
+    	
     	<!-- fileAdd -->
     	<insert id="fileAdd" parameterType="QnaFileDTO">
     		INSERT INTO qna_files VALUES (null, #{fileName}, #{fileOrigin}, #{boardNum})

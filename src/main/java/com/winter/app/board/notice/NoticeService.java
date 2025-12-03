@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.winter.app.board.BoardDTO;
 import com.winter.app.board.BoardFileDTO;
 import com.winter.app.board.BoardService;
+import com.winter.app.files.FileManager;
 import com.winter.app.util.Pager;
 
 @Service
@@ -20,6 +21,9 @@ public class NoticeService implements BoardService {
 
 	@Autowired
 	private NoticeDAO noticeDAO;
+	
+	@Autowired
+	private FileManager fileManager;
 	
 	@Value("${app.upload.notice}")
 	private String uploadPath;
@@ -36,27 +40,28 @@ public class NoticeService implements BoardService {
 	}
 	
 	public int add(BoardDTO boardDTO, MultipartFile[] attach) throws Exception {
-		
+		// 글번호가 필요
 		int result = noticeDAO.add(boardDTO);
+		// 예외1. 파일이 없는 경우
+		if(attach == null) {
+			return result;
+		}
 		
 		// 1. 파일을 HDD에 저장
 		// 	1) 어디에 저장?
 		//	2) 어떤 이름으로 저장?
+		File file = new File(uploadPath);
+		
 		for(MultipartFile f : attach) {
-			File file = new File(uploadPath);
-			if(!file.exists()) {
-				file.mkdirs();
-			}
-			String fileName = UUID.randomUUID().toString();
-			fileName = fileName + "_"+f.getOriginalFilename();
-			
-			file = new File(file, fileName);
-			
+			// 예외2. 생성된 input태그에 파일이 첨부되지 않은 경우
 			// 3) 파일 저장
-			FileCopyUtils.copy(f.getBytes(), file);
-			
 			// 4) 정보를 DB에 저장
-			BoardFileDTO boardFileDTO = new NoticeFileDTO();
+			if(f==null || f.isEmpty()) {
+				continue;
+			}
+			
+			String fileName = fileManager.fileSave(file, f);
+			BoardFileDTO boardFileDTO = new BoardFileDTO();
 			boardFileDTO.setFileName(fileName);
 			boardFileDTO.setFileOrigin(f.getOriginalFilename());
 			boardFileDTO.setBoardNum(boardDTO.getBoardNum());
@@ -70,6 +75,18 @@ public class NoticeService implements BoardService {
 	}
 	
 	public int delete(BoardDTO boardDTO) throws Exception {
+		boardDTO = noticeDAO.detail(boardDTO);
+		// HDD에서 파일을 삭제
+		List<BoardFileDTO> attach =  boardDTO.getFileDTOs();
+		
+		if(attach != null) {
+			for (BoardFileDTO boardFileDTO : attach) {
+				File file = new File(uploadPath, boardFileDTO.getFileName());
+				boolean flag = fileManager.fileDelete(file);
+			}			
+		}
+		
+		noticeDAO.fileDelete(boardDTO);
 		return noticeDAO.delete(boardDTO);
 	}
 	

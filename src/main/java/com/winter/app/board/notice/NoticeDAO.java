@@ -10,5 +10,4 @@ import com.winter.app.util.Pager;
 
 @Mapper
 public interface NoticeDAO extends BoardDAO {
-	
 }

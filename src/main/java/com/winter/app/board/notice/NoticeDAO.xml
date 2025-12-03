@@ -30,6 +30,9 @@
     	<update id="update" parameterType="NoticeDTO">
     		UPDATE notice SET board_title=#{boardTitle}, board_writer=#{boardWriter}, board_contents=#{boardContents} WHERE board_num=#{boardNum};
     	</update>
+    	<delete id="fileDelete" parameterType="BoardDTO">
+    		DELETE FROM notice_files WHERE board_num=#{boardNum}
+    	</delete>
     	<delete id="delete" parameterType="NoticeDTO">
     		DELETE FROM notice WHERE board_num=#{boardNum} 
     	</delete>
@@ -37,12 +40,30 @@
 	    	INSERT INTO notice(board_title, board_writer, board_date, board_contents) 
 	    	VALUES(#{boardTitle},#{boardWriter},now(),#{boardContents})
     	</insert>
-    	<select id="detail" parameterType="NoticeDTO" resultType="NoticeDTO">
-    		SELECT * FROM notice WHERE board_num=#{boardNum}
+    	
+    	<select id="detail" parameterType="NoticeDTO" resultMap="detailResult">
+    		SELECT *
+			FROM notice n
+			LEFT JOIN notice_files nf
+			USING(board_num)
+			WHERE n.board_num=#{boardNum};
     	</select>
+    	<resultMap type="NoticeDTO" id="detailResult">
+    		<id column="board_num" property="boardNum"/>
+    		<result column="board_title" property="boardTitle"/>
+    		<result column="board_writer" property="boardWriter"/>
+    		<result column="board_contants" property="boardContents"/>
+    		<result column="board_date" property="boardDate"/>
+    		<result column="board_hit" property="boardHit"/>
+    		<collection property="fileDTOs" javaType="java.util.List" ofType="BoardFileDTO">
+    			<id column="file_num" property="fileNum"/>
+    			<result column="file_name" property="fileName"/>
+    			<result column="file_origin" property="fileOrigin"/>
+    		</collection>
+    	</resultMap>
     	
     	<!-- fileAdd -->
-    	<insert id="fileAdd" parameterType="NoticeFileDTO">
+    	<insert id="fileAdd" parameterType="BoardFileDTO">
     		INSERT INTO notice_files VALUES (null, #{fileName}, #{fileOrigin}, #{boardNum})
     	</insert>
     </mapper>
