@@ -54,7 +54,8 @@
 					            class="form-control" 
 					            id="name" 
 					            name="productName" 
-					            required>
+					            required
+					            value="${product.productName}">
 					        </div>
 					
 					        <!-- Contents -->
@@ -65,7 +66,7 @@
 					            id="contents" 
 					            name="productContents" 
 					            rows="5"
-					          ></textarea>
+					          >${product.productContents}</textarea>
 					        </div>
 					
 					        <!-- Category -->
@@ -75,14 +76,15 @@
 					            type="text" 
 					            class="form-control" 
 					            id="category" 
-					            name="productCategory">
+					            name="productCategory"
+					            value="${product.productCategory}">
 					        </div>
 					
 					        <!-- Rate -->
 					        <div class="form-group mt-3">
 					          <label for="rate">Rate (0.00 ~ 9.99)</label>
 					          <input type="number" step="0.01" max="9.99" min="0" 
-					            class="form-control" id="rate" name="productRate" required>
+					            class="form-control" id="rate" name="productRate" required value="${product.productRate}">
 					        </div>
 					
 					        <!-- Sale 여부 -->

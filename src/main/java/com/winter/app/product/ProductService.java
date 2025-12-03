@@ -11,11 +11,18 @@ public class ProductService {
 	@Autowired
 	private ProductDAO productDAO;
 	
-	public void add(ProductDTO productDTO) {
+	public void add(ProductDTO productDTO) throws Exception {
 		productDAO.add(productDTO);
 	}
 	
-	public List<ProductDTO> list() {
+	public List<ProductDTO> list() throws Exception {
 		return productDAO.list();
+	}
+	
+	public ProductDTO detail(ProductDTO productDTO) throws Exception {
+		return productDAO.detail(productDTO);
+	}
+	public int update(ProductDTO productDTO) throws Exception {
+		return productDAO.update(productDTO);
 	}
 }

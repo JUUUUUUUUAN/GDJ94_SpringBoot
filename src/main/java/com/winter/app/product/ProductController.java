@@ -17,20 +17,42 @@ public class ProductController {
 	private ProductService productService;
 	
 	@GetMapping("list")
-	public void list(Model model) {
+	public void list(Model model) throws Exception {
 		List<ProductDTO> list =  productService.list();
 		model.addAttribute("list", list);
 	}
 	
 	@GetMapping("add")
-	public void add() {
+	public void add() throws Exception {
 	}
 	
 	@PostMapping("add")
-	public String add(ProductDTO productDTO) {
+	public String add(ProductDTO productDTO) throws Exception {
 		productService.add(productDTO);
 		
 		return "redirect:./list";
 	}
+	
+	@GetMapping("detail")
+	public void detail(ProductDTO productDTO, Model model) throws Exception {
+		productDTO =  productService.detail(productDTO);
+		model.addAttribute("product", productDTO);
+	}
+	
+	@GetMapping("update")
+	public String update(ProductDTO productDTO, Model model) throws Exception {
+		productDTO = productService.detail(productDTO);
+		// System.out.println(productDTO.toString());
+		model.addAttribute("product", productDTO);
+		
+		return "/product/add";
+	}
+	
+	@PostMapping("update")
+	public String update(ProductDTO productDTO) throws Exception {
+		productService.update(productDTO);
+		return "redirect:./list";
+	}
+	
 	
 }

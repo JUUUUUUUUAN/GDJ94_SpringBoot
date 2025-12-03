@@ -11,4 +11,12 @@
     	<select id="list" resultType="ProductDTO">
     		SELECT * FROM products
     	</select>
+    	<select id="detail" parameterType="ProductDTO" resultType="ProductDTO">
+    		SELECT * FROM products WHERE product_num=#{productNum}
+    	</select>
+    	<update id="update" parameterType="ProductDTO">
+    		UPDATE products 
+    		SET product_name=#{productName}, product_contents=#{productContents}, product_category=#{productCategory}, product_rate=#{productRate}, product_sale=#{productSale}
+    		WHERE product_num=#{productNum}  
+    	</update>
     </mapper>

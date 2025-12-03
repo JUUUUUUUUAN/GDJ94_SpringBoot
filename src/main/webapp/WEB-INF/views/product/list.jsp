@@ -50,7 +50,7 @@
 					        ${product.productNum}
 					        </td>
 					        <td>
-					        <a>${product.productName}</a>
+					        <a href="./detail?productNum=${product.productNum}">${product.productName}</a>
 					        </td>
 					        <td>
 					          <span class="badge" 
