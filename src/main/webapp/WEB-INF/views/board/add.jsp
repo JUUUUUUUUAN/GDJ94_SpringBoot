@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,22 +36,25 @@
                     
 	                <!-- Content Row -->
 	                <div class="row justify-content-center">
-	                <!-- 생성한 contents 작성 -->
-						<form method="post" class="col-sm-6" enctype="multipart/form-data">
-						<input type="hidden" name="boardNum" value="${dto.boardNum}">
+	                <!-- --------------------------- form ------------------------------ -->
+	                <form:form modelAttribute="dto" method="post" enctype="multypart/form-data">
+	                	<form:hidden path="boardNum"/>
+	                	
+	                	<!-- 생성한 contents 작성 -->
 						  <div class="form-group">
 						    <label for="title">제목</label>
-						    <input type="text" class="form-control" name="boardTitle" id="title" value="${updateDto.boardTitle}">
+						    <form:input path="boardTitle" cssClass="form-control" id="title"/>
+						    <form:errors path="boardTitle"></form:errors>
 						  </div>
 						  
 						  <div class="form-group">
 						    <label for="writer">작성자</label>
-						    <input type="text" class="form-control" name="boardWriter" id="writer" value="${updateDto.boardWriter}">
+						    <form:input path="boardWriter" cssClass="form-control" id="writer"/>
 						  </div>
 						  
 						  <div class="form-group">
-						    <label for="contents">내용</label>
-						    <textarea class="form-control" name="boardContents" id="contents" rows="6" cols="" >${updateDto.boardTitle}</textarea>
+						    <label for="contents">내용</label> 
+						    <form:textarea path="boardContents" cssClass="form-control" id="contents" rows="8"/>
 						  </div>
 						  
 						  <div class="form-group">
@@ -60,7 +64,7 @@
 						  </div>
 						  
 						  <button type="submit" class="btn btn-primary">Submit</button>
-						</form>
+						</form:form>
 	                </div>          
                 </div>
                 <!-- /.container-fluid -->

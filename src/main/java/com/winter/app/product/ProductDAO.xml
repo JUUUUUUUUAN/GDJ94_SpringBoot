@@ -19,4 +19,7 @@
     		SET product_name=#{productName}, product_contents=#{productContents}, product_category=#{productCategory}, product_rate=#{productRate}, product_sale=#{productSale}
     		WHERE product_num=#{productNum}  
     	</update>
+    	<delete id="delete">
+    		DELETE FROM products WHERE product_num=#{productNum}
+    	</delete>
     </mapper>

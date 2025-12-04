@@ -41,32 +41,11 @@
 	                        <!-- 회원가입 카드 -->
 	                        <div class="card shadow mb-4">
 	                            <div class="card-header py-3 bg-primary text-white">
-	                                <h6 class="m-0 font-weight-bold">회원 정보 입력</h6>
+	                                <h6 class="m-0 font-weight-bold">회원 정보 수정</h6>
 	                            </div>
 
 	                            <div class="card-body">
-	                            	<form:form modelAttribute="userDTO" method="post" enctype="multipart/form-data">
-
-	                                    <!-- ID -->
-	                                    <div class="mb-3">
-	                                        <label class="form-label">아이디</label>
-	                                        <form:input path="username" id="username" cssClass="form-control"/>
-	                                        <form:errors path="username"></form:errors>
-	                                    </div>
-
-	                                    <!-- Password -->
-	                                    <div class="mb-3">
-	                                        <label class="form-label">비밀번호</label>
-	                                        <form:password path="password" id="password" cssClass="form-control"/>
-	                                        <form:errors path="password"></form:errors>
-	                                    </div>
-	                                    <!-- Password -->
-	                                    <div class="mb-3">
-	                                        <label class="form-label">비밀번호</label>
-	                                        <form:password path="passwordCheck" id="passwordCheck" cssClass="form-control"/>
-	                                        <form:errors path="passwordCheck"></form:errors>
-	                                    </div>
-
+	                            	<form:form modelAttribute="userDTO" method="post" enctype="multypart/form-data">
 	                                    <!-- Name -->
 	                                    <div class="mb-3">
 	                                        <label class="form-label">이름</label>
@@ -94,15 +73,10 @@
 	                                        <form:input path="birth" id="birth" type="date"/>
 	                                        <form:errors path="birth"></form:errors>
 	                                    </div>
-	                                    
-	                                    <!-- 이미지 -->
-	                                    <div>
-	                                    	<input type="file" name="img">
-	                                    </div>
 
 	                                    <div class="text-center mt-4">
 	                                        <button type="submit" class="btn btn-primary btn-block w-100">
-	                                            회원가입
+	                                            수정
 	                                        </button>
 	                                    </div>
 

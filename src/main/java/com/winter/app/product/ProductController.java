@@ -54,5 +54,14 @@ public class ProductController {
 		return "redirect:./list";
 	}
 	
+	@GetMapping("delete")
+	public String delete(ProductDTO productDTO) throws Exception {
+		int result = productService.delete(productDTO);
+		
+		if(result > 0) {
+			return "commons/result";
+		}
+		return "redirect:./list";			
+	}
 	
 }

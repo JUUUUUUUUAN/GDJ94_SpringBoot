@@ -45,64 +45,29 @@
 	                            </div>
 
 	                            <div class="card-body">
-	                            	<form:form modelAttribute="userDTO" method="post" enctype="multipart/form-data">
-
-	                                    <!-- ID -->
+	                            	<form:form modelAttribute="userDTO" method="post">
+										<!-- Password -->
 	                                    <div class="mb-3">
-	                                        <label class="form-label">아이디</label>
-	                                        <form:input path="username" id="username" cssClass="form-control"/>
-	                                        <form:errors path="username"></form:errors>
+	                                        <label class="form-label">기존 비밀번호</label>
+	                                        <input type="password" name="exist" class="form-control">
 	                                    </div>
-
+	                                    
 	                                    <!-- Password -->
 	                                    <div class="mb-3">
-	                                        <label class="form-label">비밀번호</label>
+	                                        <label class="form-label">새로운 비밀번호</label>
 	                                        <form:password path="password" id="password" cssClass="form-control"/>
 	                                        <form:errors path="password"></form:errors>
 	                                    </div>
 	                                    <!-- Password -->
 	                                    <div class="mb-3">
-	                                        <label class="form-label">비밀번호</label>
+	                                        <label class="form-label">새로운 비밀번호</label>
 	                                        <form:password path="passwordCheck" id="passwordCheck" cssClass="form-control"/>
 	                                        <form:errors path="passwordCheck"></form:errors>
 	                                    </div>
 
-	                                    <!-- Name -->
-	                                    <div class="mb-3">
-	                                        <label class="form-label">이름</label>
-	                                        <form:input path="name" id="name" cssClass="form-control"/>
-	                                        <form:errors path="name"></form:errors>
-	                                    </div>
-
-	                                    <!-- Email -->
-	                                    <div class="mb-3">
-	                                        <label class="form-label">이메일</label>
-	                                        <form:input path="email" id="email" cssClass="form-control"/>
-	                                        <form:errors path="email"></form:errors>
-	                                    </div>
-
-	                                    <!-- Phone -->
-	                                    <div class="mb-3">
-	                                        <label class="form-label">전화번호</label>
-	                                        <form:input path="phone" id="phone" cssClass="form-control"/>
-	                                        <form:errors path="phone"></form:errors>
-	                                    </div>
-
-	                                    <!-- Birth -->
-	                                    <div class="mb-3">
-	                                        <label class="form-label">생년월일</label>
-	                                        <form:input path="birth" id="birth" type="date"/>
-	                                        <form:errors path="birth"></form:errors>
-	                                    </div>
-	                                    
-	                                    <!-- 이미지 -->
-	                                    <div>
-	                                    	<input type="file" name="img">
-	                                    </div>
-
 	                                    <div class="text-center mt-4">
 	                                        <button type="submit" class="btn btn-primary btn-block w-100">
-	                                            회원가입
+	                                            변경
 	                                        </button>
 	                                    </div>
 

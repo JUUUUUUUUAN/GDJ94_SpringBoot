@@ -93,10 +93,10 @@
 										<div class="detail-label">판매 여부</div>
 										<c:choose>
 											<c:when test="${product.productSale}">
-												<span class="badge bg-success">판매 중지</span>
+												<span class="badge bg-danger">판매 중지</span>
 											</c:when>
 											<c:otherwise>
-												<span class="badge bg-danger">판매중</span>
+												<span class="badge bg-success">판매중</span>
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -107,7 +107,7 @@
 											← 목록으로
 										</a>
 										<a href="./update?productNum=${product.productNum}" class="btn btn-success">수정</a>
-										<a href="./">삭제</a>
+										<a href="./delete?productNum=${product.productNum}" class="btn btn-danger">삭제</a>
 									</div>
 
 								</div>
