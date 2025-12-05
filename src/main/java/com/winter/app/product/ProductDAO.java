@@ -1,6 +1,7 @@
 package com.winter.app.product;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,4 +17,9 @@ public interface ProductDAO {
 	public int update(ProductDTO productDTO) throws Exception;
 	
 	public int delete(ProductDTO productDTO) throws Exception;
+	
+	// ------------------
+	public List<ProductCommentDTO> commentList(Map<String, Object> map) throws Exception;
+	
+	public int commentAdd(ProductCommentDTO productCommentDTO) throws Exception;
 }

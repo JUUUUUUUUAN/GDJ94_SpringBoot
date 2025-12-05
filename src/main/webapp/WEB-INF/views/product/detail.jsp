@@ -100,6 +100,13 @@
 											</c:otherwise>
 										</c:choose>
 									</div>
+									
+									<div>
+										<table>
+											<tbody  id="list" data-product-num="${product.productNum}">
+											</tbody>
+										</table>
+									</div>
 
 									<!-- Back Button -->
 									<div class="text-end mt-4">
@@ -138,5 +145,6 @@
 	<!-- End Wrapper -->
 
 	<c:import url="/WEB-INF/views/tamplate/foot.jsp"></c:import>
+	<script type="text/javascript" src="/js/product/product_comment.js"></script>
 </body>
 </html>

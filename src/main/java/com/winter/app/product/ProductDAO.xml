@@ -22,4 +22,15 @@
     	<delete id="delete">
     		DELETE FROM products WHERE product_num=#{productNum}
     	</delete>
+    	
+    	<!-- 댓글 -->
+    	<select id="commentList" parameterType="java.util.Map" resultType="ProductCommentDTO">
+    		SELECT * FROM comment WHERE product_num=#{product.productNum}
+    		ORDER BY board_num DESC
+    		LIMIT #{pager.startNum}, #{pager.perPage}
+    	</select>
+    	<insert id="commentAdd" parameterType="ProductCommentDTO">
+    		INSERT INTO comment
+    		VALUES (null, #{boardContents}, now(), #{productNum}, #{username})
+    	</insert>
     </mapper>

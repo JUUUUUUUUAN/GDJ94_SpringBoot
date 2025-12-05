@@ -13,14 +13,11 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class BoardDTO {
+public class BoardDTO extends CommentDTO {
 	
-	private Long boardNum;
 	@NotBlank(message="필수입니다.")
 	private String boardTitle;
 	private String boardWriter;
-	private String boardContents;
-	private LocalDate boardDate;
 	private Long boardHit;
 	
 	private List<BoardFileDTO> fileDTOs;
