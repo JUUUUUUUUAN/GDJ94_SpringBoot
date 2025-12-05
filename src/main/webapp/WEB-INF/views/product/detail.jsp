@@ -101,18 +101,17 @@
 										</c:choose>
 									</div>
 									
-									<div>
-										<table>
-											<tbody  id="list" data-product-num="${product.productNum}">
-											</tbody>
-										</table>
-									</div>
+									<div id="list" data-product-num="${product.productNum}">
+
+					        		</div>
 
 									<!-- Back Button -->
 									<div class="text-end mt-4">
 										<a href="./list" class="btn btn-secondary">
 											← 목록으로
 										</a>
+										<button id="cartAdd" class="btn btn-danger" data-product-num="${product.productNum}" data-username="${user.username}">장바구니</button>
+										<button class="btn btn-primary" data-toggle="modal" data-target="#commentModal">댓글달기</button>
 										<a href="./update?productNum=${product.productNum}" class="btn btn-success">수정</a>
 										<a href="./delete?productNum=${product.productNum}" class="btn btn-danger">삭제</a>
 									</div>
@@ -143,8 +142,33 @@
 
 	</div>
 	<!-- End Wrapper -->
+	
+	<!-- modal -->
+	<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form method="post">
+	        	<input type="hidden" value="${product.productNum}">
+	        	<textarea name="boardContents" id="contents" rows="" cols=""></textarea>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">취소</button>
+	        <button type="button" id="commentAdd" class="btn btn-primary">댓글등록</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 	<c:import url="/WEB-INF/views/tamplate/foot.jsp"></c:import>
 	<script type="text/javascript" src="/js/product/product_comment.js"></script>
+	<script type="text/javascript" src="/js/product/product_cart.js"></script>
 </body>
 </html>

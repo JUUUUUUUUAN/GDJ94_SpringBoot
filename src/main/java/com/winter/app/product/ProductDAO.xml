@@ -33,4 +33,12 @@
     		INSERT INTO comment
     		VALUES (null, #{boardContents}, now(), #{productNum}, #{username})
     	</insert>
+    	<select id="commentCount" resultType="Long" parameterType="ProductCommentDTO">
+    		SELECT count(board_num) FROM comment WHERE product_num=#{productNum} 
+    	</select>
+    	
+    	<!-- 장바구니 -->
+    	<insert id="cartAdd" parameterType="java.util.Map">
+    		INSERT INTO cart VALUES (#{product.product_num},#{user.username})
+    	</insert>
     </mapper>

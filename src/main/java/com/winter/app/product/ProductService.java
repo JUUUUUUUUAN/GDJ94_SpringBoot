@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.winter.app.users.UserDTO;
 import com.winter.app.util.Pager;
 
 @Service
@@ -35,14 +36,23 @@ public class ProductService {
 	
 	//-----------------------------------------------
 	public List<ProductCommentDTO> commentList(ProductCommentDTO productCommentDTO, Pager pager) throws Exception{;
+		pager.setPerPage(5L);
 		Map<String, Object> map = new HashMap<>();
 		map.put("product", productCommentDTO);
 		map.put("pager", pager);
-		pager.pageing(20L);
+		pager.pageing(productDAO.commentCount(productCommentDTO));
 		return productDAO.commentList(map);
 	}
 	
 	public int commentAdd(ProductCommentDTO productCommentDTO) throws Exception{
 		return productDAO.commentAdd(productCommentDTO);
 	};
+	
+	public int cartAdd(ProductDTO producDTO, UserDTO userDTO) throws Exception{
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("product", producDTO);
+		map.put("user", userDTO);
+		return productDAO.cartAdd(map);
+	}
 }
