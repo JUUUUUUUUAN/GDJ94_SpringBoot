@@ -43,6 +43,9 @@ public class UserService {
 	public int register(UserDTO userDTO) throws Exception {
 		return userDAO.register(userDTO);
 	}
+	public int roleAdd(UserDTO userDTO) throws Exception {
+		return userDAO.roleAdd(userDTO);
+	}
 	
 	public void fileAdd(UserFileDTO userFileDTO) throws Exception{
 		userDAO.fileAdd(userFileDTO);

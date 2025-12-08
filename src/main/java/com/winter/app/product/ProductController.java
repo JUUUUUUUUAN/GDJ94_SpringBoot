@@ -82,6 +82,7 @@ public class ProductController {
 	@ResponseBody
 	public int commentAdd(ProductCommentDTO productCommentDTO, HttpSession session) throws Exception{
 		UserDTO userDTO = (UserDTO) session.getAttribute("user");
+		System.out.println(userDTO);
 		productCommentDTO.setUsername(userDTO.getUsername());
 		
 		int result = productService.commentAdd(productCommentDTO);

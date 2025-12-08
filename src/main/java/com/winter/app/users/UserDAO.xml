@@ -10,12 +10,15 @@
 		<insert id="fileAdd" parameterType="UserFileDTO">
 			INSERT INTO profile VALUES (null, #{fileName}, #{fileOrigin}, #{username})
 		</insert>
+		<insert id="roleAdd" parameterType="UserDTO">
+			INSERT INTO user_role (username, role_num) VALUES(#{username}, 3)
+		</insert>
 		
 		<select id="detail" resultMap="detailResult" resultType="UserDTO">
-    		select * from users u
-				left join profile p
-				on u.username = p.username
-			where u.username = #{username}
+    		SELECT * FROM users u 
+    		LEFT JOIN profile p ON u.username = p.username 
+    		LEFT JOIN user_role ur ON u.username=ur.username 
+    		LEFT JOIN role r USING(role_num) WHERE u.username=#{username}
     	</select>
     	<resultMap type="UserDTO" id="detailResult">
     		<id column="username" property="username"/>
@@ -30,6 +33,10 @@
     			<result column="file_name" property="fileName"/>
     			<result column="file_origin" property="fileOrigin"/>
     		</association>
+    		<collection property="roleDTOs" javaType="java.util.List" ofType="RoleDTO">
+    			<id column="role_num" property="roleNum"/>
+    			<result column="role_name" property="roleName"/>
+    		</collection>
     	</resultMap>
     	
     	<update id="update" parameterType="UserDTO">

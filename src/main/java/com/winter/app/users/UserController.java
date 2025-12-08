@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +32,9 @@ public class UserController {
 	@Autowired
 	private FileManager fileManager;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Value("${app.upload.user}")
 	private String uploadPath;
 
@@ -47,9 +51,9 @@ public class UserController {
 		if(userService.getError(userDTO, bindingResult)) {
 			return "/users/register";
 		}
-		
+		userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 		userService.register(userDTO);
-		
+		userService.roleAdd(userDTO);
 		File file = new File(uploadPath);
 		
 		UserFileDTO userFileDTO = new UserFileDTO();
@@ -68,14 +72,6 @@ public class UserController {
 		
 	@GetMapping("login")
 	public void login() throws Exception {}
-	
-	@PostMapping("login")
-	public String login(UserDTO userDTO, HttpSession session) throws Exception{
-		userDTO = userService.detail(userDTO);
-		
-		session.setAttribute("user", userDTO);
-		return "redirect:/";
-	}
 	
 	@GetMapping("update")
 	public void update(HttpSession session, Model model) throws Exception {
