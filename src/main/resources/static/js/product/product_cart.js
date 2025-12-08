@@ -1,6 +1,3 @@
-/**
- * 
- */
 
 const cartAdd = document.getElementById("cartAdd");
 let productNum = cartAdd.getAttribute("data-product-num");

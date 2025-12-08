@@ -39,6 +39,6 @@
     	
     	<!-- 장바구니 -->
     	<insert id="cartAdd" parameterType="java.util.Map">
-    		INSERT INTO cart VALUES (#{product.product_num},#{user.username})
+    		INSERT INTO cart VALUES (#{product.productNum},#{user.username})
     	</insert>
     </mapper>
