@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.winter.app.users.UserDTO;
+
 @Mapper
 public interface ProductDAO {
 
@@ -26,4 +28,6 @@ public interface ProductDAO {
 	public int commentAdd(ProductCommentDTO productCommentDTO) throws Exception;
 	
 	public int cartAdd(Map<String, Object> map) throws Exception;
+	
+	public List<ProductDTO> cart(UserDTO userDTO) throws Exception;
 }

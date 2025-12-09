@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -110,6 +111,7 @@
 										<a href="./list" class="btn btn-secondary">
 											← 목록으로
 										</a>
+										<sec:authentication property="principal" var="user"/>
 										<button id="cartAdd" class="btn btn-danger" data-product-num="${product.productNum}" data-username="${user.username}">장바구니</button>
 										<button class="btn btn-primary" data-toggle="modal" data-target="#commentModal">댓글달기</button>
 										<a href="./update?productNum=${product.productNum}" class="btn btn-success">수정</a>

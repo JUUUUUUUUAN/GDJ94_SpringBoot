@@ -39,6 +39,9 @@
     	
     	<!-- 장바구니 -->
     	<insert id="cartAdd" parameterType="java.util.Map">
-    		INSERT INTO cart VALUES (#{product.productNum},#{user.username})
+    		INSERT INTO cart VALUES (#{user.username},#{product.productNum})
     	</insert>
+    	<select id="cart" parameterType="UserDTO" resultType="ProductDTO">
+    		SELECT * FROM products p JOIN cart c USING(product_num) WHERE username=#{username};
+    	</select>
     </mapper>

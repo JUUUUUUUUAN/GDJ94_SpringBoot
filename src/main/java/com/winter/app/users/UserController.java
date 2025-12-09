@@ -4,6 +4,11 @@ import java.io.File;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import com.winter.app.board.notice.NoticeService;
 import com.winter.app.files.FileManager;
-
+import com.winter.app.home.HomeController;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -24,7 +29,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/users/*")
 public class UserController {
 
+    private final HomeController homeController;
+
     private final NoticeService noticeService;
+    
+    @Autowired
+    private UserDetailServiceImpl userDetailServiceImpl;
 	
 	@Autowired
 	private UserService userService;
@@ -38,8 +48,9 @@ public class UserController {
 	@Value("${app.upload.user}")
 	private String uploadPath;
 
-    UserController(NoticeService noticeService) {
+    UserController(NoticeService noticeService, HomeController homeController) {
         this.noticeService = noticeService;
+        this.homeController = homeController;
     }
 	
 	@GetMapping("register")
@@ -67,34 +78,46 @@ public class UserController {
 	}
 	
 	@GetMapping("mypage")
-	public void detail() throws Exception {
+	public void detail(@AuthenticationPrincipal UserDTO userDTO, Model model) throws Exception {
+		userDTO = userService.detail(userDTO);
+		model.addAttribute("user", userDTO);
 	}
 		
 	@GetMapping("login")
-	public void login() throws Exception {}
+	public String login(HttpSession session) throws Exception {
+		Object obj = session.getAttribute("SPRING_SECURITY_CONTEXT");
+		
+		if(obj != null) {
+			return "redirect:/";
+		}
+		return "users/login";
+	}
 	
 	@GetMapping("update")
-	public void update(HttpSession session, Model model) throws Exception {
+	public void update(Authentication authentication, Model model) throws Exception {
 		// 정보 수정시 기존의 유저 정보를 보여주어야하니 세션에 저장된 유저 정보를 전달한다.
-		model.addAttribute("userDTO", session.getAttribute("user"));
+		UserDTO userDTO = (UserDTO) authentication.getPrincipal();
+		System.out.println(userDTO);
+		model.addAttribute("userDTO", userDTO);
 	}
 	
 	@PostMapping("update")
-	public String update(@Validated(UpdateGroup.class) UserDTO userDTO, BindingResult bindingResult, HttpSession session) throws Exception {
+	public String update(@Validated(UpdateGroup.class) UserDTO userDTO, BindingResult bindingResult, Authentication authentication) throws Exception {
 		if(bindingResult.hasErrors()) {
 			return "users/update";
 		} 
 		// 수정할 정보를 받은 경우 세션에 있는 정보와 수정된 정보가 다르다
 		// 1. 세션에 있는 정보를 가져온다(username이 없기때문에 => 수정된 정보는 이름, 이메일, 전화번호, 생년월일만 수정 가능)
-		UserDTO loginDTO = (UserDTO) session.getAttribute("user");
+		UserDTO loginDTO = (UserDTO) authentication.getPrincipal();
 		// 2. 전달받은 객체(username없음)에 username만 추가하여 정보 업데이트 진행
 		userDTO.setUsername(loginDTO.getUsername());
 		int result = userService.update(userDTO);
 		
 		if(result > 0) {
-			// 3. 새로 업데이트 되었으면 새로 업데이트된 정보로 다시 세션에 전달하기
-			loginDTO = userService.detail(loginDTO);
-			session.setAttribute("user", loginDTO);
+			// 3. DB에서 사용자를 조회 해야 함
+			//UsernamePasswordAuthenticationToken to = new UsernamePasswordAuthenticationToken(userDTO, authentication.getCredentials(), authentication.getAuthorities());
+			//SecurityContextHolder.getContext().setAuthentication(authentication);
+			
 		}
 		return "redirect:./mypage";
 	}

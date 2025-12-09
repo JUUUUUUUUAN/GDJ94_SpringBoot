@@ -37,7 +37,7 @@
 	                <!-- Content Row -->
 	                <div class="row justify-content-center">
 	                <!-- --------------------------- form ------------------------------ -->
-	                <form:form modelAttribute="dto" method="post" enctype="multypart/form-data">
+	                <form:form modelAttribute="dto" method="post" enctype="multipart/form-data">
 	                	<form:hidden path="boardNum"/>
 	                	
 	                	<!-- 생성한 contents 작성 -->
@@ -47,10 +47,10 @@
 						    <form:errors path="boardTitle"></form:errors>
 						  </div>
 						  
-						  <div class="form-group">
+						  <%-- <div class="form-group">
 						    <label for="writer">작성자</label>
-						    <form:input path="boardWriter" cssClass="form-control" id="writer"/>
-						  </div>
+						    <form:input path="boardWriter" disabled cssClass="form-control" id="writer"/>
+						  </div> --%>
 						  
 						  <div class="form-group">
 						    <label for="contents">내용</label> 

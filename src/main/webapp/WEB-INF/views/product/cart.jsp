@@ -97,15 +97,15 @@
 													</td>
 
 													<!-- 수량 입력 -->
-													<td style="width: 120px;">
+													<%-- <td style="width: 120px;">
 														<input type="number" class="form-control" min="1" value="${item.quantity}">
-													</td>
+													</td> --%>
 
 													<!-- 삭제 버튼 -->
-													<td>
+													<%-- <td>
 														<a href="./delete?cartId=${item.cartId}"
 														   class="btn btn-danger btn-sm">삭제</a>
-													</td>
+													</td> --%>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -153,6 +153,5 @@
 	</div>
 
 	<c:import url="/WEB-INF/views/tamplate/foot.jsp"></c:import>
-
 </body>
 </html>

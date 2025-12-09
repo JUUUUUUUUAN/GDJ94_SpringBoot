@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -80,9 +81,7 @@ public class ProductController {
 	
 	@PostMapping("commentAdd")
 	@ResponseBody
-	public int commentAdd(ProductCommentDTO productCommentDTO, HttpSession session) throws Exception{
-		UserDTO userDTO = (UserDTO) session.getAttribute("user");
-		System.out.println(userDTO);
+	public int commentAdd(@AuthenticationPrincipal UserDTO userDTO, ProductCommentDTO productCommentDTO) throws Exception{
 		productCommentDTO.setUsername(userDTO.getUsername());
 		
 		int result = productService.commentAdd(productCommentDTO);
@@ -92,11 +91,15 @@ public class ProductController {
 	
 	@PostMapping("cartAdd")
 	@ResponseBody
-	public int cartAdd(ProductDTO productDTO, HttpSession session) throws Exception {
-		UserDTO userDTO = (UserDTO) session.getAttribute("user");
-		
+	public int cartAdd(@AuthenticationPrincipal UserDTO userDTO, ProductDTO productDTO) throws Exception {
 		int result = productService.cartAdd(productDTO,userDTO);
 		return result;
+	}
+	
+	@GetMapping("cart")
+	public void cart(@AuthenticationPrincipal UserDTO userDTO, Model model) throws Exception {
+		List<ProductDTO> cartlist = productService.cart(userDTO);
+		model.addAttribute("cartList", cartlist);
 	}
 	
 }

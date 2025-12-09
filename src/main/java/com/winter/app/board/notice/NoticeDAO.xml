@@ -52,7 +52,7 @@
     		<id column="board_num" property="boardNum"/>
     		<result column="board_title" property="boardTitle"/>
     		<result column="board_writer" property="boardWriter"/>
-    		<result column="board_contants" property="boardContents"/>
+    		<result column="board_contents" property="boardContents"/>
     		<result column="board_date" property="boardDate"/>
     		<result column="board_hit" property="boardHit"/>
     		<collection property="fileDTOs" javaType="java.util.List" ofType="BoardFileDTO">

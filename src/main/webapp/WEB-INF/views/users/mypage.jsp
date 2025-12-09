@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,16 +45,14 @@
 									<h6 class="m-0 font-weight-bold">내 정보</h6>
 								</div>
 
-								<div class="card-body">
-
+								<div class="card-body">	
+									
 									<!-- Profile Image -->
 									<div class="text-center mb-4">
 										<div class="mt-2 text-muted">프로필 이미지</div>
-										<%-- <c:if test="${not empty user.fileName}">
-											<img alt="이미지" src="/upload/user/${user.fileName}">
-										</c:if> --%>
+										
 									</div>
-
+									
 									<!-- Username -->
 									<div class="mb-3">
 										<div class="mypage-label">아이디</div>
@@ -89,7 +88,6 @@
 										<a href="./update" class="btn btn-warning btn-sm px-4">정보 수정</a>
 										<a href="./change" class="btn btn-secondary btn-sm px-4">비밀번호 변경</a>
 									</div>
-
 								</div>
 	                		</div>          
                 		</div>

@@ -25,46 +25,10 @@ public class UserDTO implements UserDetails {
 	@NotBlank(groups = {RegisterGroup.class})
 	private String username;
 	
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		List<GrantedAuthority> list = new ArrayList<>();
-		
-		for(int i = 0; i < roleDTOs.size(); i++) {
-			GrantedAuthority g = new SimpleGrantedAuthority(roleDTOs.get(i).getRoleName());
-			list.add(g);
-		}
-		return list;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 	//@Length(min=8, max=12)
 	@NotBlank(groups = {RegisterGroup.class, PasswordGroup.class})
 	private String password;
-
+	
 	private String passwordCheck;
 	@NotBlank(groups = {RegisterGroup.class, UpdateGroup.class})
 	private String name;
@@ -80,4 +44,23 @@ public class UserDTO implements UserDetails {
 	private UserFileDTO userFileDTO;
 	
 	private List<RoleDTO> roleDTOs;
+	
+//	boolean은 getter/setter 생성시 is로 시작됨
+	private boolean accountNonExpired;
+	private boolean accountNonLocked;
+	private boolean credentialsNonExpired;
+	private boolean enabled;
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		List<GrantedAuthority> list = new ArrayList<>();
+		
+		for(int i = 0; i < roleDTOs.size(); i++) {
+			GrantedAuthority g = new SimpleGrantedAuthority(roleDTOs.get(i).getRoleName());
+			list.add(g);
+		}
+		return list;
+	}
+
 }

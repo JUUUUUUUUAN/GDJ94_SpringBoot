@@ -45,7 +45,8 @@
 	                            </div>
 
 	                            <div class="card-body">
-	                            	<form:form modelAttribute="userDTO" method="post" enctype="multypart/form-data">
+	                            	
+	                            	<form:form modelAttribute="userDTO" method="post" enctype="multipart/form-data">
 	                                    <!-- Name -->
 	                                    <div class="mb-3">
 	                                        <label class="form-label">이름</label>

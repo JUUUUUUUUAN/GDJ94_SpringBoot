@@ -58,6 +58,7 @@
                         <h6 class="collapse-header">product</h6>
                         <a class="collapse-item" href="/product/list">List</a>
                         <a class="collapse-item" href="/product/add">Add</a>
+                        <a class="collapse-item" href="/product/cart">Cart</a>
                     </div>
                 </div>
             </li>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.winter.app.board.BoardDTO;
 import com.winter.app.board.BoardFileDTO;
+import com.winter.app.users.UserDTO;
 import com.winter.app.util.Pager;
 
 import jakarta.validation.Valid;
@@ -52,15 +54,19 @@ public class NoticeController {
 	}
 	
 	@PostMapping("add")
-	public String add(@ModelAttribute("dto") @Valid NoticeDTO noticeDTO,BindingResult bindingResult, Model model, MultipartFile[] attach) throws Exception {
+	public String add(@ModelAttribute("dto") @Valid NoticeDTO noticeDTO,BindingResult bindingResult, Model model, MultipartFile[] attach, Authentication authentication) throws Exception {
 		
 		if(bindingResult.hasErrors()) {
 			return "board/add";
 		}
-		//noticeService.add(noticeDTO, attach);
+		
+		// 작성자 내용 가져오기
+		UserDTO userDTO = (UserDTO) authentication.getPrincipal();
+		noticeDTO.setBoardWriter(userDTO.getUsername());
+		noticeService.add(noticeDTO, attach);
 		
 		model.addAttribute("path", "list");
-		return "/commons/result";
+		return "commons/result";
 	}
 	
 	@GetMapping("detail")
@@ -86,7 +92,7 @@ public class NoticeController {
 		boardDTO = noticeService.detail(boardDTO);
 		model.addAttribute("dto", boardDTO);
 		model.addAttribute("sub", "update");
-		return "/board/add";
+		return "board/add";
 	}
 	
 	@PostMapping("update")

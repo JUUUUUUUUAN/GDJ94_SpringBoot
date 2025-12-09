@@ -44,6 +44,10 @@
 	                            </div>
 
 	                            <div class="card-body">
+	                            	<div>
+	                            		${param.message}
+	                            	</div>
+	                            
 	                                <form method="post">
 
 	                                    <!-- ID -->
@@ -56,6 +60,12 @@
 	                                    <div class="mb-3">
 	                                        <label class="form-label">비밀번호</label>
 	                                        <input type="password" name="password" class="form-control">
+	                                    </div>
+	                                    
+	                                    <!-- 자동로그인 체크박스 -->
+	                                    <div>
+	                                    	<input type="checkbox" id="rememberId" name="rememberme">
+	                                    	<label for="rememberId">Remember me</label>
 	                                    </div>
 
 	                                    

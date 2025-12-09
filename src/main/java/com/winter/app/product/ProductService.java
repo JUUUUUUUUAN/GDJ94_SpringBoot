@@ -55,4 +55,8 @@ public class ProductService {
 		map.put("user", userDTO);
 		return productDAO.cartAdd(map);
 	}
+	
+	public List<ProductDTO> cart(UserDTO userDTO) throws Exception {
+		return productDAO.cart(userDTO);
+	}
 }
