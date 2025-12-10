@@ -10,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.winter.app.users.UserDetailServiceImpl;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -25,6 +27,9 @@ public class SecurityConfig {
 	
 	@Autowired
 	private LogoutSuccess logoutSuccess;
+	
+	@Autowired
+	private UserDetailServiceImpl userDetailServiceImpl;
 	
 	//정적자원들을 Security에서 제외
 		@Bean
@@ -84,10 +89,36 @@ public class SecurityConfig {
 						.logoutSuccessHandler(logoutSuccess)
 						.invalidateHttpSession(true)
 						.deleteCookies("JSESSIONID")
+						.deleteCookies("remember-me")
 						;
 				})
 				
+				.rememberMe(remember->{
+					remember
+						.rememberMeParameter("rememberme")
+						.tokenValiditySeconds(60)
+						.key("rememberkey")
+						.userDetailsService(userDetailServiceImpl)
+						.authenticationSuccessHandler(loginSuccessHandler)
+						// 보안관련
+						.useSecureCookie(true)
+						;
+				})
 				
+				.sessionManagement(session->{
+					session
+						.invalidSessionUrl("/")
+						.maximumSessions(1)
+						// true: 현재사용자가 로그인 못함 / false: 이전사용자가 로그인 못함
+						.maxSessionsPreventsLogin(true)
+						;
+				})
+				
+				.oauth2Login(t->{
+					t.userInfoEndpoint(s->{
+						s.userService(userDetailServiceImpl);
+					});
+				})
 				;
 		
 			return security.build();

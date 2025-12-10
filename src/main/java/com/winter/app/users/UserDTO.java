@@ -4,11 +4,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -21,7 +23,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class UserDTO implements UserDetails {
+public class UserDTO implements UserDetails, OAuth2User {
 	@NotBlank(groups = {RegisterGroup.class})
 	private String username;
 	
@@ -45,7 +47,7 @@ public class UserDTO implements UserDetails {
 	
 	private List<RoleDTO> roleDTOs;
 	
-//	boolean은 getter/setter 생성시 is로 시작됨
+//	UserDetails boolean은 getter/setter 생성시 is로 시작됨
 	private boolean accountNonExpired;
 	private boolean accountNonLocked;
 	private boolean credentialsNonExpired;
@@ -62,5 +64,15 @@ public class UserDTO implements UserDetails {
 		}
 		return list;
 	}
-
+	
+//  OAuth2User
+	private Map<String, Object> attributes;
+	private String sns;
+	
+	@Override
+	public Map<String, Object> getAttributes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }
