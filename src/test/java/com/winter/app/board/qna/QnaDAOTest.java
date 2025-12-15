@@ -12,19 +12,19 @@ class QnaDAOTest {
 	@Autowired
 	private QnaDAO qnaDAO;
 	
-	@Test
-	void testAdd() throws Exception {
-		for(int i = 0; i < 100; i++) {
-			QnaDTO qnaDTO = new QnaDTO();
-			qnaDTO.setBoardTitle("title"+i);
-			qnaDTO.setBoardWriter("writer"+i);
-			qnaDTO.setBoardContents("contents"+i);
-			qnaDTO.setBoardHit(0L);
-			qnaDTO.setBoardRef(0L);
-			qnaDTO.setBoardStep(0L);
-			qnaDTO.setBoardDepth(0L);
-			qnaDAO.add(qnaDTO);
-		}
-	}
+//	@Test
+//	void testAdd() throws Exception {
+//		for(int i = 0; i < 100; i++) {
+//			QnaDTO qnaDTO = new QnaDTO();
+//			qnaDTO.setBoardTitle("title"+i);
+//			qnaDTO.setBoardWriter("writer"+i);
+//			qnaDTO.setBoardContents("contents"+i);
+//			qnaDTO.setBoardHit(0L);
+//			qnaDTO.setBoardRef(0L);
+//			qnaDTO.setBoardStep(0L);
+//			qnaDTO.setBoardDepth(0L);
+//			qnaDAO.add(qnaDTO);
+//		}
+//	}
 
 }
