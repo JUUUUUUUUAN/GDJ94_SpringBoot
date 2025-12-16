@@ -3,13 +3,18 @@ package com.winter.app.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.winter.app.config.security.jwt.JwtAuthenticationFilter;
+import com.winter.app.config.security.jwt.JwtLoginFilter;
+import com.winter.app.config.security.jwt.JwtTokenManager;
 import com.winter.app.users.UserDetailServiceImpl;
 
 @Configuration
@@ -30,6 +35,14 @@ public class SecurityConfig {
 	
 	@Autowired
 	private UserDetailServiceImpl userDetailServiceImpl;
+	
+	// ------------JWT 추가---------------
+	
+	@Autowired
+	private JwtTokenManager jwtTokenManager;
+	
+	@Autowired
+	private AuthenticationConfiguration authenticationConfiguration;
 	
 	//정적자원들을 Security에서 제외
 		@Bean
@@ -67,17 +80,9 @@ public class SecurityConfig {
 				
 				//Login form과 그외 관련 설정
 				.formLogin((form)->{
-					form
-						// 로그인폼 jsp 경로로 가는 url과 로그인 처리 url 작성
-						.loginPage("/users/login")
-						//.usernameParameter("username")
-						//.passwordParameter("password")
-						//.defaultSuccessUrl("/")
-						.failureUrl("/")
-						.failureHandler(loginFailHandler)
-						.successHandler(loginSuccessHandler)
-						;
-					
+					//front 분리
+					form.disable();
+					;
 					
 				})
 				
@@ -90,29 +95,23 @@ public class SecurityConfig {
 						.invalidateHttpSession(true)
 						.deleteCookies("JSESSIONID")
 						.deleteCookies("remember-me")
-						;
-				})
-				
-				.rememberMe(remember->{
-					remember
-						.rememberMeParameter("rememberme")
-						.tokenValiditySeconds(60)
-						.key("rememberkey")
-						.userDetailsService(userDetailServiceImpl)
-						.authenticationSuccessHandler(loginSuccessHandler)
-						// 보안관련
-						.useSecureCookie(true)
+						.deleteCookies("access-token","refresh-token")
 						;
 				})
 				
 				.sessionManagement(session->{
 					session
-						.invalidSessionUrl("/")
-						.maximumSessions(1)
-						// true: 현재사용자가 로그인 못함 / false: 이전사용자가 로그인 못함
-						.maxSessionsPreventsLogin(true)
+						// 세션을 사용하지 않음
+						.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 						;
 				})
+				
+				.httpBasic((h)->{
+					h.disable();
+				})
+				
+				.addFilter(new JwtAuthenticationFilter(jwtTokenManager, authenticationConfiguration.getAuthenticationManager()))
+				.addFilter(new JwtLoginFilter(jwtTokenManager, authenticationConfiguration.getAuthenticationManager()))
 				
 				.oauth2Login(t->{
 					t.userInfoEndpoint(s->{

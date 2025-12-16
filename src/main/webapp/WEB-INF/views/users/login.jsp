@@ -48,7 +48,7 @@
 	                            		${param.message}
 	                            	</div>
 	                            
-	                                <form method="post">
+	                                <form method="post" action="/users/loginProcess">
 
 	                                    <!-- ID -->
 	                                    <div class="mb-3">
